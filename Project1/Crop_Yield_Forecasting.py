@@ -37,7 +37,7 @@ def main():
   input  = input[input.index != 1994]
   output = output[output.index != 1994]
 
-  Predicted_Output = pd.DataFrame(index=output.index, columns=['Predicted Yield','Percent Error'])
+  Predicted_Output = pd.DataFrame(index=output.index, columns=[])
   for Year_In_Question in output.index:
 
     X = np.array(input[input.index != Year_In_Question])
@@ -114,36 +114,38 @@ def main():
 # print output
 
 # Plot the results!
+  legend_entry = ['k-', 'k-.', 'g-', 'b-', 'y-', 'm-', 'b-.', 'g-.' ]
 
   fig = pl.figure()
-  pl.plot(input.index, output['Crop Yield'], 'r-.', label=u'$Observations$')
+  pl.plot(input.index, output['Crop Yield'], 'r*-', linewidth=2.0, label=u'$Observations$')
 
-  pl.plot(input.index, output['Linear'], 'k:', label=u'Linear')
-# pl.plot(input.index, output['Polynomial'], 'm-', label=u'Polynomial p=2')
-  pl.plot(input.index, output['GPML'], 'g-', label=u'GPML')
-  pl.plot(input.index, output['TheilSen'], 'b-', label=u'Theil Sen')
-  pl.plot(input.index, output['Ridge'], 'k-', label=u'Ridge')
-  pl.plot(input.index, output['Lasso'], 'c-', label=u'Lasso')
-  pl.plot(input.index, output['Elastic'], 'y-', label=u'Elastic Net')
-  pl.plot(input.index, output['BayRidge'], 'b:', label=u'Bayesian Ridge')
+  pl.plot(input.index, output['Linear'], legend_entry[0], label=u'Linear')
+# pl.plot(input.index, output['Polynomial'], legend_entry[1], label=u'Polynomial p=2')
+  pl.plot(input.index, output['GPML'], legend_entry[2], label=u'GPML')
+  pl.plot(input.index, output['TheilSen'], legend_entry[3], label=u'Theil Sen')
+  pl.plot(input.index, output['Ridge'], legend_entry[4], label=u'Ridge')
+  pl.plot(input.index, output['Lasso'], legend_entry[5], label=u'Lasso')
+  pl.plot(input.index, output['Elastic'], legend_entry[6], label=u'Elastic Net')
+  pl.plot(input.index, output['BayRidge'], legend_entry[7], label=u'Bayesian Ridge')
 
   pl.xlabel('$Year$')
   pl.ylabel('$Crop Yield$')
   pl.xlim(1982, 2004)
+  pl.ylim(70, 160)
   pl.legend(loc='best')
   pl.savefig('Crop_Yield_Prediciton.png', bbox_inches='tight')
   pl.show()
 
 
   fig = pl.figure()
-  pl.plot(input.index, output['Linear Percent Error'], 'k:', label=u'Linear')
-# pl.plot(input.index, output['Polynomial Percent Error'], 'm-', label=u'Polynomial p=2')
-  pl.plot(input.index, output['GPML Percent Error'], 'g-', label=u'GPML')
-  pl.plot(input.index, output['TheilSen Percent Error'], 'b-', label=u'Theil Sen')
-  pl.plot(input.index, output['Ridge Percent Error'], 'k-', label=u'Ridge')
-  pl.plot(input.index, output['Lasso Percent Error'], 'c-', label=u'Lasso')
-  pl.plot(input.index, output['Elastic Percent Error'], 'y-', label=u'Elastic Net')
-  pl.plot(input.index, output['BayRidge Percent Error'], 'b:', label=u'Bayesian Ridge')
+  pl.plot(input.index, output['Linear Percent Error'], legend_entry[0], label=u'Linear')
+# pl.plot(input.index, output['Polynomial Percent Error'], legend_entry[1], label=u'Polynomial p=2')
+  pl.plot(input.index, output['GPML Percent Error'], legend_entry[2], label=u'GPML')
+  pl.plot(input.index, output['TheilSen Percent Error'], legend_entry[3], label=u'Theil Sen')
+  pl.plot(input.index, output['Ridge Percent Error'], legend_entry[4], label=u'Ridge')
+  pl.plot(input.index, output['Lasso Percent Error'], legend_entry[5], label=u'Lasso')
+  pl.plot(input.index, output['Elastic Percent Error'], legend_entry[6], label=u'Elastic Net')
+  pl.plot(input.index, output['BayRidge Percent Error'], legend_entry[7], label=u'Bayesian Ridge')
 
   pl.xlabel('$Year$')
   pl.ylabel('$\% Error$')
@@ -152,6 +154,7 @@ def main():
   pl.savefig('Crop_Yield_Percent_Error.png', bbox_inches='tight')
   pl.show()
 
+  print np.mean(output)
 
 
 if __name__ == '__main__':
