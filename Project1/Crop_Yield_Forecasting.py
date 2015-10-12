@@ -130,8 +130,28 @@ def main():
   pl.xlabel('$Year$')
   pl.ylabel('$Crop Yield$')
   pl.xlim(1982, 2004)
-  pl.legend(loc='lower right')
+  pl.legend(loc='best')
+  pl.savefig('Crop_Yield_Prediciton.png', bbox_inches='tight')
   pl.show()
+
+
+  fig = pl.figure()
+  pl.plot(input.index, output['Linear Percent Error'], 'k:', label=u'Linear')
+# pl.plot(input.index, output['Polynomial Percent Error'], 'm-', label=u'Polynomial p=2')
+  pl.plot(input.index, output['GPML Percent Error'], 'g-', label=u'GPML')
+  pl.plot(input.index, output['TheilSen Percent Error'], 'b-', label=u'Theil Sen')
+  pl.plot(input.index, output['Ridge Percent Error'], 'k-', label=u'Ridge')
+  pl.plot(input.index, output['Lasso Percent Error'], 'c-', label=u'Lasso')
+  pl.plot(input.index, output['Elastic Percent Error'], 'y-', label=u'Elastic Net')
+  pl.plot(input.index, output['BayRidge Percent Error'], 'b:', label=u'Bayesian Ridge')
+
+  pl.xlabel('$Year$')
+  pl.ylabel('$\% Error$')
+  pl.xlim(1982, 2004)
+  pl.legend(loc='best')
+  pl.savefig('Crop_Yield_Percent_Error.png', bbox_inches='tight')
+  pl.show()
+
 
 
 if __name__ == '__main__':
