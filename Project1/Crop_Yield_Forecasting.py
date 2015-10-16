@@ -117,7 +117,7 @@ def main():
   legend_entry = ['k-', 'k-.', 'g-', 'b-', 'y-', 'm-', 'b-.', 'g-.' ]
 
   fig = pl.figure()
-  pl.plot(input.index, output['Crop Yield'], 'r*-', linewidth=2.0, label=u'$Observations$')
+  pl.plot(input.index, output['Crop Yield'], 'r*-', linewidth=2.0, label=u'$Yield$')
 
   pl.plot(input.index, output['Linear'], legend_entry[0], label=u'Linear')
 # pl.plot(input.index, output['Polynomial'], legend_entry[1], label=u'Polynomial p=2')
@@ -155,6 +155,18 @@ def main():
   pl.show()
 
   print np.mean(output)
+
+  fig = pl.figure()
+  pl.plot(input.index, output['Linear Percent Error'], legend_entry[0], label=u'Linea    r')
+  pl.plot(input.index, output['GPML Percent Error'], legend_entry[2], label=u'GPML')
+  pl.plot(input.index, output['TheilSen Percent Error'], legend_entry[3], label=u'The    il Sen')
+
+  pl.xlabel('$Year$')
+  pl.ylabel('$\% Error$')
+  pl.xlim(1982, 2004)
+  pl.legend(loc='best')
+# pl.savefig('Crop_Yield_Percent_Error.png', bbox_inches='tight')
+  pl.show()
 
 
 if __name__ == '__main__':

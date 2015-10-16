@@ -1,0 +1,16 @@
+import json
+import pandas as pd
+
+def main():
+  data = []
+  with open('beers.json') as f:
+    for line in f:
+      data.append(json.loads(line))
+
+  dataFr = pd.DataFrame(data)
+# print dataFr.loc[dataFr['brewery'] == 'Delta Beverages']
+  print dataFr[dataFr['brewery'].str.contains('Russian') == True]
+
+
+if __name__ == '__main__':
+  main()
